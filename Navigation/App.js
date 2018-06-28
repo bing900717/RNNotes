@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button ,Image} from 'react-native';
+import { View, Text, Button, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 
@@ -17,15 +17,31 @@ class LogoTitle extends React.Component {
 
 class HomeScreen extends React.Component {
 
-  static navigationOptions = {
-    headerTitle: <LogoTitle />,
-    headerRight: (
-      <Button
-        onPress = {()=>alert('This is a button')}
-        title = 'Info'
-        color = 'blue'
-      />
-    )
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: <LogoTitle />,
+      headerRight: (
+        <Button
+          onPress={navigation.getParam('increaseCount')}
+          title="+1"
+          color="#fff"
+        />
+      ),
+    };
+  };
+
+  componentDidMount() {
+    this.props.navigation.setParams({ increaseCount: this._increaseCount });
+  }
+
+  state = {
+    count: 0
+  };
+
+  _increaseCount = () => {
+    this.setState({ count: this.state.count + 1 });
+
+    console.log(this.state.count);
   };
 
   render() {
